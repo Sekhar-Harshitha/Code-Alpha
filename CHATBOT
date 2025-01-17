@@ -1,0 +1,38 @@
+import spacy
+
+
+nlp = spacy.load('en_core_web_sm')
+
+
+def get_intent(text):
+    doc = nlp(text)
+    if "hello" in [token.text.lower() for token in doc]:
+        return "greeting"
+    elif "bye" in [token.text.lower() for token in doc]:
+        return "farewell"
+    else:
+        return "unknown"
+
+def generate_response(intent):
+    if intent == "greeting":
+        return "Hello! How can I help you today?"
+    elif intent == "farewell":
+        return "Goodbye! Have a great day!"
+    else:
+        return "I'm not sure I understand. Could you please rephrase?"
+
+
+def chatbot():
+    print("Chatbot: Hi! Type 'bye' to exit.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "bye":
+            print("Chatbot: Goodbye! Have a great day!")
+            break
+
+        intent = get_intent(user_input)
+        response = generate_response(intent)
+        print("Chatbot:", response)
+
+
+chatbot()
