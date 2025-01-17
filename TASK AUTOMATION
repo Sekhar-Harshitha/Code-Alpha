@@ -1,0 +1,30 @@
+import os
+import shutil
+
+# Define source and destination directories
+source_dir = '/path/to/source'
+dest_dir = '/path/to/destination'
+
+# List of file types and their corresponding directories
+file_types = {
+    'images': ['.jpg', '.jpeg', '.png', '.gif'],
+    'documents': ['.pdf', '.docx', '.txt'],
+    'audio': ['.mp3', '.wav'],
+    'videos': ['.mp4', '.mkv']
+}
+
+# Function to organize files
+def organize_files():
+    for filename in os.listdir(source_dir):
+        file_ext = os.path.splitext(filename)[1].lower()
+        for category, extensions in file_types.items():
+            if file_ext in extensions:
+                dest_path = os.path.join(dest_dir, category)
+                if not os.path.exists(dest_path):
+                    os.makedirs(dest_path)
+                shutil.move(os.path.join(source_dir, filename), os.path.join(dest_path, filename))
+                break
+
+if __name__ == "__main__":
+    organize_files()
+    print("Files have been organized.")
